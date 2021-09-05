@@ -1,0 +1,39 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: secrets-store-csi-driver-provider-lastpass
+  namespace: kube-system
+  labels:
+    app: secrets-store-csi-driver-provider-lastpass
+spec:
+  updateStrategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: secrets-store-csi-driver-provider-lastpass
+  template:
+    metadata:
+      labels:
+        app: secrets-store-csi-driver-provider-lastpass
+    spec:
+      hostNetwork: true
+      containers:
+        - name: provider-lastpass-installer
+          image: ansd/secrets-store-csi-driver-provider-lastpass:0.1.0
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+            limits:
+              cpu: 50m
+              memory: 100Mi
+          volumeMounts:
+            - mountPath: "/etc/kubernetes/secrets-store-csi-providers"
+              name: providervol
+      volumes:
+        - name: providervol
+          hostPath:
+            path: "/etc/kubernetes/secrets-store-csi-providers"
+      nodeSelector:
+        kubernetes.io/os: linux

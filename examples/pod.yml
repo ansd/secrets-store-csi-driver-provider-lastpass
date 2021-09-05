@@ -1,0 +1,27 @@
+---
+kind: Pod
+apiVersion: v1
+metadata:
+  name: mypod
+  namespace: default
+spec:
+  containers:
+  - name: busybox
+    image: k8s.gcr.io/e2e-test-images/busybox:1.29
+    command:
+      - "/bin/sleep"
+      - "10000"
+    volumeMounts:
+    - name: mysecrets
+      mountPath: "/mnt/secrets-store"
+      readOnly: true
+  volumes:
+    - name: mysecrets
+      csi:
+        driver: secrets-store.csi.k8s.io
+        readOnly: true
+        volumeAttributes:
+          secretProviderClass: "app-secrets"
+        nodePublishSecretRef:
+          # Name of K8s secret containing LastPass username and master password
+          name: lastpass-credentials
