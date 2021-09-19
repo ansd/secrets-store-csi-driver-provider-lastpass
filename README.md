@@ -1,6 +1,6 @@
 # LastPass Provider for Secret Store CSI Driver
 
-A very experimental [LastPass](https://lastpass.com) provider for Kubernetes [Secrets Store CSI Driver](https://secrets-store-csi-driver.sigs.k8s.io/).
+A very experimental [LastPass](https://lastpass.com) provider for [Kubernetes Secrets Store CSI Driver](https://secrets-store-csi-driver.sigs.k8s.io/).
 
 ## Usage
 

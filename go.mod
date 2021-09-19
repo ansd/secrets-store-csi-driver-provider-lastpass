@@ -3,7 +3,7 @@ module github.com/ansd/secrets-store-csi-driver-provider-lastpass
 go 1.17
 
 require (
-	github.com/ansd/lastpass-go v0.3.0
+	github.com/ansd/lastpass-go v0.3.1
 	google.golang.org/grpc v1.40.0
 	gopkg.in/yaml.v2 v2.4.0
 	k8s.io/klog/v2 v2.20.0

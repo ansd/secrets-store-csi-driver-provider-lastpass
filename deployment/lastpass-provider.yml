@@ -20,7 +20,7 @@ spec:
       hostNetwork: true
       containers:
         - name: provider-lastpass-installer
-          image: ansd/secrets-store-csi-driver-provider-lastpass:0.1.0
+          image: ansd/secrets-store-csi-driver-provider-lastpass:0.1.1
           resources:
             requests:
               cpu: 50m

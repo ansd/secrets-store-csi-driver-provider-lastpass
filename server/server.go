@@ -53,7 +53,7 @@ func (s *CSIDriverProviderServer) Version(ctx context.Context, req *v1alpha1.Ver
 	return &v1alpha1.VersionResponse{
 		Version:        "v1alpha1",
 		RuntimeName:    "secrets-store-csi-driver-provider-lastpass",
-		RuntimeVersion: "v0.1.0",
+		RuntimeVersion: "v0.1.1",
 	}, nil
 }
 
