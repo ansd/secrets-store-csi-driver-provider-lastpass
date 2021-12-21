@@ -15,8 +15,7 @@ import (
 	"sigs.k8s.io/secrets-store-csi-driver/provider/v1alpha1"
 )
 
-type CSIDriverProviderServer struct {
-}
+type CSIDriverProviderServer struct{}
 
 type mountConfig struct {
 	podInfo     *podInfo

@@ -7,7 +7,7 @@ repo_dir="${script_dir}/.."
 
 # Create local Kubernetes in Docker cluster
 kind create cluster \
-    --image kindest/node:v1.21.1 \
+    --image kindest/node:v1.23.0 \
     --name lastpass
 
 # Install the Secrets Store CSI Driver as described in
@@ -15,7 +15,7 @@ kind create cluster \
 helm repo add secrets-store-csi-driver https://kubernetes-sigs.github.io/secrets-store-csi-driver/charts
 helm install csi-secrets-store secrets-store-csi-driver/secrets-store-csi-driver \
     --namespace kube-system \
-    --version "0.3.0" \
+    --version "1.0.0" \
     --wait
 
 # Install the LastPass provider.
