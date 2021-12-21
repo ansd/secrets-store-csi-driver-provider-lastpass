@@ -16,11 +16,14 @@ helm repo add secrets-store-csi-driver https://kubernetes-sigs.github.io/secrets
 helm install csi-secrets-store secrets-store-csi-driver/secrets-store-csi-driver \
     --namespace kube-system \
     --version "1.0.0" \
+    --set "syncSecret.enabled=true" \
+    --set "enableSecretRotation=true" \
     --wait
+kubectl -n kube-system wait --for=condition=Ready pods -l "app=secrets-store-csi-driver" --timeout=5m
 
 # Install the LastPass provider.
 kubectl apply -f "${repo_dir}/deployment/lastpass-provider.yml"
-kubectl -n kube-system wait --for=condition=Ready pods -l "app=secrets-store-csi-driver-provider-lastpass" --timeout=2m
+kubectl -n kube-system wait --for=condition=Ready pods -l "app=secrets-store-csi-driver-provider-lastpass" --timeout=5m
 
 # Deploy a Pod getting secrets from LastPass.
 # Environment variables LASTPASS_USERNAME and LASTPASS_MASTERPASSWORD must be exported.
