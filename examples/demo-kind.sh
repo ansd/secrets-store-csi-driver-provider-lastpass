@@ -28,7 +28,7 @@ kubectl -n kube-system wait --for=condition=Ready pods -l "app=secrets-store-csi
 # Deploy a Pod getting secrets from LastPass.
 # Environment variables LASTPASS_USERNAME and LASTPASS_MASTERPASSWORD must be exported.
 sed "s/((lastpass-username))/${LASTPASS_USERNAME}/; s/((lastpass-masterpassword))/${LASTPASS_MASTERPASSWORD}/" \
-    "${repo_dir}"/examples/*.yml | kubectl apply -f -
+    "${repo_dir}"/examples/*.yml 2>/dev/null | kubectl apply -f -
 kubectl wait --for=condition=Ready pod/mypod --timeout=5m
 
 # Print the mounted LastPass file names.

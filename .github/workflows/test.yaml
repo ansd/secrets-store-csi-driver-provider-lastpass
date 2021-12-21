@@ -1,0 +1,24 @@
+name: test
+
+on: [push]
+
+jobs:
+  test-examples:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install KinD
+        # pinning to the sha aa272fe2a7309878ffc2a81c56cfe3ef108ae7d0 from https://github.com/engineerd/setup-kind/releases/tag/v0.5.0
+        uses: engineerd/setup-kind@aa272fe2a7309878ffc2a81c56cfe3ef108ae7d0
+        with:
+          version: "v0.11.1"
+          skipClusterCreation: "true"
+      - name: Test examples
+        env:
+          LASTPASS_USERNAME: ${{ secrets.LASTPASS_USERNAME }}
+          LASTPASS_MASTERPASSWORD: ${{ secrets.LASTPASS_MASTERPASSWORD }}
+        run: |
+          ./examples/demo-kind.sh
+          kubectl exec mypod -- cat /mnt/secrets-store/netflix | grep --silent '"Password":"mypassword"'
+          kubectl get secret mysecret -o 'go-template={{index .data "mykey"}}' | base64 -d | grep --silent '"Password":"mypassword"'
