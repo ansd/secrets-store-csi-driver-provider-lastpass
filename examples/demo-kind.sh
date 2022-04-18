@@ -7,7 +7,7 @@ repo_dir="${script_dir}/.."
 
 # Create local Kubernetes in Docker cluster
 kind create cluster \
-    --image kindest/node:v1.23.0 \
+    --image kindest/node:v1.23.5 \
     --name lastpass
 
 # Install the Secrets Store CSI Driver as described in
