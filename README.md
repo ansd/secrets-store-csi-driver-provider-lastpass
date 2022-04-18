@@ -3,7 +3,7 @@
 An experimental [LastPass](https://lastpass.com) provider for [Kubernetes Secrets Store CSI Driver](https://secrets-store-csi-driver.sigs.k8s.io/).
 
 ## Background
-As explained in [this](https://youtu.be/w0k7MI6sCJg?t=177) KubeCon talk, there 4 different approaches in K8s to consume secrets from external secret stores:
+As explained in [this](https://youtu.be/w0k7MI6sCJg?t=177) KubeCon talk, there are 4 different approaches in K8s to consume secrets from external secret stores:
 1. Direct API
 2. Controller to mirrors secrets in K8s
 3. Sidecar + MutatingWebhookConfiguration
@@ -29,7 +29,7 @@ Comparing the design of this LastPass provider to
 * [GCP Provider](https://github.com/GoogleCloudPlatform/secrets-store-csi-driver-provider-gcp)
 * [Azure Provider](https://github.com/Azure/secrets-store-csi-driver-provider-azure/)
 
-it resembles most [Service Principle Mode in Azure Key Vault](https://azure.github.io/secrets-store-csi-driver-provider-azure/configurations/identity-access-modes/service-principal-mode/) meaning
+it resembles most [Service Principle Mode in Azure Key Vault](https://azure.github.io/secrets-store-csi-driver-provider-azure/docs/configurations/identity-access-modes/service-principal-mode/) meaning
 1. LastPass username and master password (to authenticate to LastPass) need to be created as a K8s Secret which is stored (by default) as plaintext in etcd.
 2. Username and master password is the only supported way to connect to LastPass because LastPass does not support authentication using a K8s Service Account Token.
 
