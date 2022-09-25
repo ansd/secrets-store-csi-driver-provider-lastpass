@@ -18,7 +18,7 @@ This repo implements the last approach for the external secret store `LastPass`.
 
 ## Usage
 
-1. Define the items you want to fetch from LastPass in [examples/secret-provider-class.yml](https://github.com/ansd/secrets-store-csi-driver-provider-lastpass/blob/85ebeb8bd13155577cb6c5b679274edba20652cc/examples/secret-provider-class.yml#L10-L16).
+1. Define the items you want to fetch from LastPass in [examples/secret-provider-class.yml](https://github.com/ansd/secrets-store-csi-driver-provider-lastpass/blob/56fe8be105902eced34da3568721f3f15fe2fb97/examples/secret-provider-class.yml#L10-L16).
 2. `LASTPASS_USERNAME=<my-user> LASTPASS_MASTERPASSWORD=<my-password> ./examples/demo-kind.sh`
 
 ## Design
