@@ -7,7 +7,7 @@ repo_dir="${script_dir}/.."
 
 # Create local Kubernetes in Docker cluster
 kind create cluster \
-    --image kindest/node:v1.23.5 \
+    --image kindest/node:v1.25.2 \
     --name lastpass
 
 # Install the Secrets Store CSI Driver as described in
@@ -15,7 +15,7 @@ kind create cluster \
 helm repo add secrets-store-csi-driver https://kubernetes-sigs.github.io/secrets-store-csi-driver/charts
 helm install csi-secrets-store secrets-store-csi-driver/secrets-store-csi-driver \
     --namespace kube-system \
-    --version "1.0.0" \
+    --version "1.2.4" \
     --set "syncSecret.enabled=true" \
     --set "enableSecretRotation=true" \
     --wait
