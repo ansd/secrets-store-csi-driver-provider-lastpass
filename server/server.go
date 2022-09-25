@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"reflect"
 	"strings"
 
 	"github.com/ansd/lastpass-go"
@@ -21,6 +22,7 @@ type mountConfig struct {
 	podInfo     *podInfo
 	auth        *auth
 	items       []*item
+	output      string
 	permissions os.FileMode
 }
 
@@ -126,6 +128,8 @@ func parse(req *v1alpha1.MountRequest) (*mountConfig, error) {
 		return mountConfig, fmt.Errorf("failed to unmarshal 'items' attribute: %v", err)
 	}
 
+	mountConfig.output = attr["output"]
+
 	return mountConfig, nil
 }
 
@@ -153,14 +157,22 @@ func mount(ctx context.Context, mountConfig *mountConfig) (*v1alpha1.MountRespon
 	for _, item := range mountConfig.items {
 		for _, acct := range lastPassAccounts {
 			if acct.Share == item.Share && acct.Group == item.Group && acct.Name == item.Name {
-				bytes, err := json.Marshal(acct)
-				if err != nil {
-					return &v1alpha1.MountResponse{}, err
+				var contents []byte
+				if mountConfig.output == "" {
+					// by default output account's JSON representation
+					contents, err = json.Marshal(acct)
+					if err != nil {
+						return &v1alpha1.MountResponse{}, err
+					}
+				} else {
+					v := reflect.ValueOf(acct)
+					f := reflect.Indirect(v).FieldByName(mountConfig.output)
+					contents = []byte(f.String())
 				}
 				path := filepath.Join(acct.Share, acct.Group, acct.Name)
 				files = append(files, &v1alpha1.File{
 					Path:     path,
-					Contents: bytes,
+					Contents: contents,
 					Mode:     int32(mountConfig.permissions),
 				})
 				ovs = append(ovs, &v1alpha1.ObjectVersion{

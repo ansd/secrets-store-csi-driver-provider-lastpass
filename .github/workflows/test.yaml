@@ -20,5 +20,5 @@ jobs:
           LASTPASS_MASTERPASSWORD: ${{ secrets.LASTPASS_MASTERPASSWORD }}
         run: |
           ./examples/demo-kind.sh
-          kubectl exec mypod -- cat /mnt/secrets-store/netflix | grep --silent '"Password":"mypassword"'
-          kubectl get secret mysecret -o 'go-template={{index .data "mykey"}}' | base64 -d | grep --silent '"Password":"mypassword"'
+          kubectl exec mypod -- cat /mnt/secrets-store/netflix | grep --silent "^mypassword$"
+          kubectl get secret mysecret -o 'go-template={{index .data "mykey"}}' | base64 -d | grep --silent "^mypassword$"
